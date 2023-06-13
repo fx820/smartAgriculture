@@ -11,13 +11,10 @@ import cn.ecnu.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import static cn.ecnu.constant.OptTypeConstant.*;
 import java.util.List;
 
@@ -59,7 +56,7 @@ public class ProductController {
     @OptLogger(value = ADD)
     @ApiOperation(value = "添加农产品")
     @PostMapping("/add")
-    public Result<?> addProduct(@Validated @RequestBody ProductDTO product){
+    public Result<?> addProduct(@RequestBody @Validated ProductDTO product){
         productService.addProduct(product);
         return Result.success();
     }
@@ -103,7 +100,7 @@ public class ProductController {
     @OptLogger(value = UPDATE)
     @ApiOperation(value = "修改农产品信息")
     @PutMapping("/update")
-    public Result<?> updateProduct(@Validated @RequestBody ProductDTO product){
+    public Result<?> updateProduct(@RequestBody @Validated ProductDTO product){
         productService.updateProduct(product);
         return Result.success();
     }

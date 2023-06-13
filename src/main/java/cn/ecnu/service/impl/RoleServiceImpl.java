@@ -65,7 +65,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                 .eq(Role::getRoleName, role.getRoleName()));
         Assert.isNull(existRole, role.getRoleName() + "角色名已存在");
         // 添加新角色
-        Role newRole = Role.builder().roleName(role.getRoleName()).roleDescription(role.getRoleDesc()).isDisable(role.getIsDisable()).build();
+        Role newRole = Role.builder().roleName(role.getRoleName()).roleDesc(role.getRoleDesc()).isDisable(role.getIsDisable()).build();
         baseMapper.insert(newRole);
         // 添加角色菜单权限
         roleMenuMapper.insertRoleMenu(newRole.getId(), role.getMenuIdList());
@@ -99,7 +99,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         Role newRole = Role.builder()
                 .id(role.getId())
                 .roleName(role.getRoleName())
-                .roleDescription(role.getRoleDesc()).
+                .roleDesc(role.getRoleDesc()).
                 isDisable(role.getIsDisable())
                 .build();
         roleMapper.updateById(newRole);

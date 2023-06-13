@@ -51,6 +51,11 @@ public class ConditionDTO {
     private Integer status;
 
     /**
+     * 地区编号
+     */
+    private Integer zoneId;
+
+    /**
      * 登录类型
      */
     @ApiModelProperty(value = "登录类型")

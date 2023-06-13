@@ -6,14 +6,11 @@ import cn.ecnu.model.dto.DeleteDTO;
 import cn.ecnu.model.dto.ProductDTO;
 import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.model.vo.ProductVO;
-import cn.ecnu.strategy.UploadStrategy;
 import cn.ecnu.strategy.context.UploadStrategyContext;
 import cn.ecnu.utils.BeanCopyUtils;
-import cn.ecnu.utils.FileUtils;
 import cn.ecnu.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.ecnu.mapper.ProductMapper;
 import cn.ecnu.entity.Product;
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +60,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
            .select(Product::getId)
            .eq(Product::getName,product.getName())
    );
-   Assert.notNull(hasProduct,product.getName()+"已存在！");
+   Assert.isNull(hasProduct,product.getName()+"已存在！");
    //添加农产品信息
    Product newProduct = BeanCopyUtils.copyBean(product, Product.class);
    baseMapper.insert(newProduct);
@@ -90,6 +86,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public void updateProduct(ProductDTO product) {
+        Product hasProduct = productMapper.selectOne(new LambdaQueryWrapper<Product>()
+                .select(Product::getId)
+                .eq(Product::getName,product.getName())
+        );
+        Assert.isNull(hasProduct,product.getName()+"已存在,无法更改！");
         Product updateProduct = BeanCopyUtils.copyBean(product, Product.class);
         baseMapper.updateById(updateProduct);
     }

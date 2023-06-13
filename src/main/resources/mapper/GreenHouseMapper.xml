@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.ecnu.mapper.ProductMapper">
-    <select id="countProductVO" resultType="java.lang.Long">
-        SELECT COUNT(*) from t_product
+<mapper namespace="cn.ecnu.mapper.GreenHousesMapper">
+    <select id="countGreenHouse" resultType="java.lang.Long">
+        SELECT COUNT(*) from t_green_houses
         <where>
             <if test="condition.keyword != null">
                 AND name like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.status != null">
                 AND status = #{condition.status}
+            </if>
+            <if test="condition.zoneId != null">
+                AND zone_id = #{condition.zoneID}
             </if>
         </where>
     </select>
 
-    <select id="selectProductVO" resultType="cn.ecnu.model.vo.ProductVO">
-        SELECT * from t_product
+    <select id="selectGreenHouseVO" resultType="cn.ecnu.model.vo.GreenHouseVO">
+        SELECT h.*,z.name as zoneName
+        FROM t_green_houses h LEFT JOIN t_zone z
+        ON h.ZONE_ID=z.ID
         <where>
             <if test="condition.keyword != null">
                 AND name like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.status != null">
-                AND status = #{condition.status}
+                AND h.status = #{condition.status}
             </if>
         </where>
         ORDER BY create_time desc

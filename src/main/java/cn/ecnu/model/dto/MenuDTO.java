@@ -21,7 +21,7 @@ public class MenuDTO {
      * 菜单id
      */
     @ApiModelProperty(value = "菜单id")
-    private Integer id;
+    private String id;
 
     /**
      * 父菜单id

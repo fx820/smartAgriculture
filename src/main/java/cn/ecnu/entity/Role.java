@@ -25,7 +25,7 @@ public class Role {
         //角色名称
         private String roleName;
         //角色描述
-        private String roleDescription;
+        private String roleDesc;
         //是否禁用 (0否 1是)
         private Integer isDisable;
         //创建时间
