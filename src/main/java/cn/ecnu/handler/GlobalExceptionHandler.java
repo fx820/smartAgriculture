@@ -6,6 +6,8 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.ecnu.exception.ServiceException;
 import cn.ecnu.model.vo.Result;
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,6 +21,7 @@ import static cn.ecnu.enums.StatusCodeEnum.*;
  *
  * @author zachary
  */
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -35,6 +38,14 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result<?> handleIllegalArgumentException(IllegalArgumentException e) {
+        return Result.fail(e.getMessage());
+    }
+
+    /**
+     * 处理Assert抛出数据库数据重复异常
+     */
+    @ExceptionHandler(value = MybatisPlusException.class)
+    public Result<?> handleMybatisPlusException(MybatisPlusException e) {
         return Result.fail(e.getMessage());
     }
 

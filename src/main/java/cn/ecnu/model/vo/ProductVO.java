@@ -31,15 +31,10 @@ public class ProductVO {
     private Integer cycle;
     //创建时间
     @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
     //修改时间
-    @ApiModelProperty(value = "修改时间")
-    @TableField(fill = FieldFill.UPDATE)
+    @ApiModelProperty(value = "上一次更新时间")
     private Date updateTime;
-    //是否删除（0：否 1：是）
-    @ApiModelProperty(value = "是否删除（0：否 1：是）")
-    private Integer isDelete;
 
     //农产品图像
     @ApiModelProperty(value = "农产品图片")

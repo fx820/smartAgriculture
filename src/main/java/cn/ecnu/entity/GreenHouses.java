@@ -23,11 +23,13 @@ import lombok.NoArgsConstructor;
 public class GreenHouses {
         //大棚编号
         private Integer id;
+        //大棚名称
+        private String name;
         //所在区域
         private Integer zoneId;
         //建造时间
         private Date buildTime;
-        //状态（1：公开 2：私密）
+        //使用状态（1：荒废 2：使用中）
         private Integer status;
         //是否删除（0：否 1：是）
         private Integer isDelete;

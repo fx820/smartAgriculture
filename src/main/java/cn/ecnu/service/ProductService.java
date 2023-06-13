@@ -1,9 +1,6 @@
 package cn.ecnu.service;
 
-import cn.ecnu.model.dto.ConditionDTO;
-import cn.ecnu.model.dto.DeleteDTO;
-import cn.ecnu.model.dto.PasswordDTO;
-import cn.ecnu.model.dto.ProductDTO;
+import cn.ecnu.model.dto.*;
 import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.model.vo.ProductVO;
 import com.baomidou.mybatisplus.extension.service.IService;
