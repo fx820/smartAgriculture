@@ -1,52 +1,52 @@
 import { PageResult, Result } from "@/model";
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
-import { Product, ProductForm, ProductQuery } from "./types";
+import { Pest, PestForm, PestQuery } from "./types";
 
 /**
- * 查看农作物列表
+ * 查看虫害信息列表
  * @param params 查询条件
- * @returns 农作物列表
+ * @returns 虫害信息列表
  */
-export function getProductList(params: ProductQuery): AxiosPromise<Result<PageResult<Product[]>>> {
+export function getPestList(params: PestQuery): AxiosPromise<Result<PageResult<Pest[]>>> {
   return request({
-    url: "/product/list",
+    url: "/pest/list",
     method: "get",
     params,
   });
 }
 
 /**
- * 删除农作物
- * @param data 农作物id集合
+ * 删除虫害信息
+ * @param data 虫害信息id集合
  */
-export function deleteProduct(data: number[]): AxiosPromise<Result<null>> {
+export function deletePest(data: number[]): AxiosPromise<Result<null>> {
   return request({
-    url: "/product/delete",
+    url: "/pest/delete",
     method: "delete",
     data,
   });
 }
 
 /**
- * 添加农作物
- * @param data 农作物信息
+ * 添加虫害信息
+ * @param data 虫害信息信息
  */
-export function addProduct(data: ProductForm): AxiosPromise<Result<null>> {
+export function addPest(data: PestForm): AxiosPromise<Result<null>> {
   return request({
-    url: "/product/add",
+    url: "/pest/add",
     method: "post",
     data,
   });
 }
 
 /**
- * 修改农作物
- * @param data 农作物信息
+ * 修改虫害信息
+ * @param data 虫害信息信息
  */
-export function updateProduct(data: ProductForm): AxiosPromise<Result<null>> {
+export function updatePest(data: PestForm): AxiosPromise<Result<null>> {
   return request({
-    url: "/product/update",
+    url: "/pest/update",
     method: "put",
     data,
   });

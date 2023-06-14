@@ -51,3 +51,14 @@ export function updateProduct(data: ProductForm): AxiosPromise<Result<null>> {
     data,
   });
 }
+
+/**
+ * 获取所有的农作物信息
+ */
+export function getProductAll(): AxiosPromise<Result<Product[]>> {
+  return request({
+    url: "/product/selectAll",
+    method: "get"
+  });
+}
+

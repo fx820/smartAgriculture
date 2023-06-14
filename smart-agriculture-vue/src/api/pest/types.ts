@@ -1,47 +1,64 @@
 import { PageQuery } from "@/model";
 
 /**
- * 农作物
+ * 虫害监测
  */
-export interface Product {
+export interface Pest {
   /**
-   * 农作物id
+   * 虫害监测id
    */
   id: number;
   /**
-   * 农作物名称
+   * 大棚编号
    */
-  name: string;
+  greenHouseId: number;
   /**
-   * 种植周期
+   * 大棚名
    */
-  cycle: number;
+  greenHouseName: string;
   /**
-   * 种植状态 (0未种植 1种植)
+   * 图片监测url
+   */
+  imageSrc: string;
+  /**
+   * 识别结果
+   */
+  result: string;
+  /**
+   * 农作物编号
+   */
+  productId: number;
+  /**
+   * 农作物名
+   */
+  productName: string;
+  /**
+   * 识别准确率
+   */
+  accuracy: string;
+  /**
+   * 数据可见状态 (0不可见 1可见)
    */
   status: number;
   /**
    * 创建时间
    */
   createTime: string;
-  /**
-   * 修改时间
-   */
-  updateTime:string;
-  /**
-   * 农作物图片
-   */
-  photo:string;
 }
 
 /**
- * 农作物查询参数
+ * 虫害监测查询参数
  */
-export interface ProductQuery extends PageQuery {
+export interface PestQuery extends PageQuery {
+
   /**
-   * 关键词
+   * 大棚编号
    */
-  keyword?: string;
+  greenHouseId: number;
+  /**
+   * 农作物编号
+   */
+  productId?: number;
   /**
    * 种植状态（0未种植 1种植）
    */
@@ -49,28 +66,37 @@ export interface ProductQuery extends PageQuery {
 }
 
 /**
- * 农作物表单
+ * 虫害监测表单
  */
-export interface ProductForm {
+export interface AddPestForm {
   /**
-   * 农作物id
+   * 虫害监测id
    */
   id?: number;
   /**
-   * 农作物名称
+   * 大棚编号
    */
-  name: string;
+  greenHouseId?: number;
+
   /**
-   * 种植周期
+   * 图片监测url
    */
-  cycle: number;
+  imageSrc: string;
   /**
-   * 种植状态 (0未种植 1种植)
+   * 农作物编号
    */
-  status: number;
+  productId?: number;
+}
+
+export interface UpdatePestForm {
   /**
-   * 农作物图像
+   * 虫害监测id
    */
-  photo: string;
+  id?: number;
+
+  /**
+   * 图片监测url
+   */
+  imageSrc: string;
 }
 

@@ -178,7 +178,7 @@ const data = reactive({
   status: [
     {
       value: 1,
-      label: "荒废",
+      label: "荒废中",
     },
     {
       value: 2,

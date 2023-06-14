@@ -51,3 +51,13 @@ export function updateHouse(data: HouseForm): AxiosPromise<Result<null>> {
     data,
   });
 }
+
+/**
+ * 获取所有可用的大棚信息信息
+ */
+export function getHouses(): AxiosPromise<Result<House[]>> {
+  return request({
+    url: "/house/selectEnableAll",
+    method: "get"
+  });
+}
