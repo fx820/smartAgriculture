@@ -58,10 +58,8 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
         UploadManager uploadManager = new UploadManager(cfg);
 
         path = path.substring(1,path.length());
-        System.out.println(path);
         //默认不指定key的情况下，以文件内容的hash值作为文件名  可以在此指定 路径/文件名称 +后缀显示文件类型
-        String key = path+fileName;
-
+        String key = path+"/"+fileName;
         try {
             //创建凭证
             Auth auth = Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey());
@@ -71,15 +69,11 @@ public class OssUploadStrategyImpl extends AbstractUploadStrategyImpl {
                 Response response = uploadManager.put(inputStream,key,upToken,null, null);
                 //解析上传成功的结果
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-                System.out.println(putRet.key);
-                System.out.println(putRet.hash);
                 //返回的路径
                 String imageUrl = ossProperties.getImageUrl();
                 imageUrl = "";
-                System.out.println("错误在于："+imageUrl);
                 imageUrl = ossProperties.getUrl()+"/"+key;
                 ossProperties.setImageUrl(imageUrl);
-                System.out.println("url : "+ossProperties.getImageUrl());
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());

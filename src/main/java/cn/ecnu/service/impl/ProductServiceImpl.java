@@ -99,8 +99,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public String saveProductImages(MultipartFile file) {
         //上传文件
         String url = uploadStrategyContext.executeUploadStrategy(file, FilePathEnum.PRODUCT.getFilePath());
-        System.out.println(url);
         return url;
+    }
+
+    @Override
+    public List<ProductVO> selectAll() {
+        List<Product> products = productMapper.selectList(null);
+        List<ProductVO> productVOS = BeanCopyUtils.copyBeanList(products, ProductVO.class);
+        return productVOS;
     }
 
 

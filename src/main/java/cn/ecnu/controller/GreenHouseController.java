@@ -45,6 +45,11 @@ public class GreenHouseController {
         return Result.success(greenHousesService.listGreenHouseVO(condition));
     }
 
+    @ApiOperation(value = "查询大棚可用列表")
+    @GetMapping("/selectEnableAll")
+    public Result<List<GreenHouseVO>> selectEnableAll(){
+        return Result.success(greenHousesService.selectEnableAll());
+    }
 
     /*
      * @intro: 增加大棚信息

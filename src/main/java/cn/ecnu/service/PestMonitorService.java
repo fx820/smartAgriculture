@@ -5,8 +5,11 @@ import cn.ecnu.model.dto.PestMonitorDTO;
 import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.model.vo.PestMonitorVO;
 import cn.ecnu.model.vo.PestRecognizeVO;
+import cn.ecnu.model.vo.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.ecnu.entity.PestMonitor;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -52,4 +55,14 @@ public interface PestMonitorService extends IService<PestMonitor> {
      * @param pestMonitor
      */
     void updatePestMonitor(PestMonitorDTO pestMonitor);
+
+    /*
+     * @intro: 上传图片
+     * @author: zachary
+     * @param: file
+     * @return: String
+     **/
+    String saveProductImages(MultipartFile file);
+
+
 }

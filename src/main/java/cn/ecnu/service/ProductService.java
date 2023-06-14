@@ -64,4 +64,6 @@ public interface ProductService extends IService<Product> {
      * @return: String
      **/
     String saveProductImages(MultipartFile file);
+
+    List<ProductVO> selectAll();
 }

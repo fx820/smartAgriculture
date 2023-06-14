@@ -23,14 +23,9 @@ public enum FilePathEnum {
     PRODUCT("/product/", "/product", "农产品图片路径"),
 
     /**
-     * 配置图片路径
-     */
-    CONFIG("/config/", "/config", "配置图片路径"),
-
-    /**
      * 虫害图片路径
      */
-    MONITOR("/monitor/", "/monitor", "虫害图片路径");
+    PEST("/pest/", "/pest", "虫害图片路径");
 
     /**
      * 路径

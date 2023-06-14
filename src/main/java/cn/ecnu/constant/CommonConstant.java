@@ -90,14 +90,14 @@ public class CommonConstant {
     public final static String PARENT_VIEW = "ParentView";
 
     /**
-     * 地区可用
+     * 可用
      */
-    public final static Integer ZONE_ENABLE_STATUS = 2;
+    public final static Integer ENABLE_STATUS = 2;
 
     /**
-     * 地区不可用
+     * 不可用
      */
-    public final static Integer ZONE_NO_ENABLE_STATUS = 1;
+    public final static Integer NO_ENABLE_STATUS = 1;
 
     /**
      * EasyDL API路径
