@@ -26,5 +26,5 @@ public class PestRecognizeVO {
 
     //准确率
     @ApiModelProperty(value = "识别准确率")
-    private String accuracy;
+    private Double accuracy;
 }

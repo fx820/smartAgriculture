@@ -56,6 +56,17 @@ public class ConditionDTO {
     private Integer zoneId;
 
     /**
+     * 大棚编号
+     */
+
+    private Integer greenHouseId;
+
+    /**
+     * 农作物编号
+     */
+    private Integer productId;
+
+    /**
      * 登录类型
      */
     @ApiModelProperty(value = "登录类型")

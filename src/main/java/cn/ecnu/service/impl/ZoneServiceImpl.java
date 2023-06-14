@@ -70,7 +70,7 @@ public class ZoneServiceImpl extends ServiceImpl<ZoneMapper, Zone> implements Zo
   LambdaQueryWrapper<Zone> queryWrapper = new LambdaQueryWrapper();
   queryWrapper.
           select(Zone::getId,Zone::getName)
-          .eq(Zone::getStatus, CommonConstant.ZONE_ENABLE_STATUS);
+          .eq(Zone::getStatus, CommonConstant.ENABLE_STATUS);
   List<Zone> zones = zoneMapper.selectList(queryWrapper);
   List<ZoneVO> zoneVOS = BeanCopyUtils.copyBeanList(zones, ZoneVO.class);
   return zoneVOS;

@@ -41,4 +41,6 @@ public interface GreenHousesService extends IService<GreenHouses> {
     PageResult<GreenHouseVO> listGreenHouseVO(ConditionDTO condition);
 
     List<GreenHouseVO> hasHouse(Integer[] ids);
+
+    List<GreenHouseVO> selectEnableAll();
 }

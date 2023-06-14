@@ -45,7 +45,7 @@ public class PestMonitorVO {
     private String productName;
     //准确率
     @ApiModelProperty(value = "准确率")
-    private String accuracy;
+    private Double accuracy;
     //状态（1：公开 2：私密）
     @ApiModelProperty(value = "数据可见状态（1：公开 2：私密）")
     private Integer status;

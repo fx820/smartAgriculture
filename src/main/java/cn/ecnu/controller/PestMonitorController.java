@@ -8,10 +8,13 @@ import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.model.vo.PestRecognizeVO;
 import cn.ecnu.model.vo.Result;
 import cn.ecnu.service.PestMonitorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,8 +26,9 @@ import static cn.ecnu.constant.OptTypeConstant.*;
  * @version: 1.0
  */
 
+@Api(tags = "虫害监测模块")
 @RestController
-@RequestMapping("/pest/monitor")
+@RequestMapping("/pest")
 public class PestMonitorController {
 
     @Autowired
@@ -99,6 +103,21 @@ public class PestMonitorController {
     public Result<?> updatePestMonitor(@RequestBody @Validated PestMonitorDTO PestMonitor){
         pestMonitorService.updatePestMonitor(PestMonitor);
         return Result.success();
+    }
+
+
+    /*
+     * @intro: 上传图片
+     * @author: zachary
+     * @param: file
+     * @return: Result<String>
+     **/
+    @OptLogger(value = UPLOAD)
+    @ApiOperation(value = "上传农作物图片")
+    @ApiImplicitParam(name = "file",value = "农作物图片",dataType = "MultipartFile")
+    @PostMapping("/upload")
+    public Result<String> saveProductImages(@RequestParam("file")MultipartFile file){
+        return Result.success(pestMonitorService.saveProductImages(file));
     }
 
 }

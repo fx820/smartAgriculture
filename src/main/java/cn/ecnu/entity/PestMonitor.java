@@ -33,7 +33,7 @@ public class PestMonitor {
         //农产品编号
         private Integer productId;
         //准确率
-        private String accuracy;
+        private Double accuracy;
         //状态（1：公开 2：私密）
         private Integer status;
         //是否删除（0：否 1：是）

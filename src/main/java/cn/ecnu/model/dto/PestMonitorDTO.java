@@ -32,10 +32,7 @@ public class PestMonitorDTO {
     private Integer productId;
     //准确率
     @ApiModelProperty(value = "准确率")
-    private String accuracy;
-    //状态（1：公开 2：私密）
-    @ApiModelProperty(value = "数据可见状态（1：公开 2：私密）")
-    private Integer status;
+    private Double accuracy;
     //创建时间
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
