@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @intro: GreenHouses表服务实现类
@@ -57,5 +59,16 @@ public class GreenHousesServiceImpl extends ServiceImpl<GreenHousesMapper, Green
   List<GreenHouseVO> greenHouseVOS = greenHousesMapper.selectGreenHouseVO(PageUtils.getLimit(),PageUtils.getSize(),condition);
   return new PageResult<>(greenHouseVOS,count);
  }
+
+ //TODO 删除时判断是否有关联数据
+ @Override
+ public List<GreenHouseVO> hasHouse(Integer[] ids) {
+  List<GreenHouseVO> list = null;
+  for (int i = 0; i < ids.length; i++) {
+   list = greenHousesMapper.hasHouse(ids[i]);
+  }
+  return list;
+ }
+
 }
 

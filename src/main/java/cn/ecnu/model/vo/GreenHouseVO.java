@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -16,6 +19,9 @@ import java.util.Date;
  */
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(description = "大棚VO")
 public class GreenHouseVO {
 

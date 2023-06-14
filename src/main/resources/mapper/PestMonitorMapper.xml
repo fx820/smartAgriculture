@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ecnu.mapper.PestMonitorMapper">
+    <select id="countPestMonitor" resultType="java.lang.Long">
+        SELECT COUNT(*) from t_pest_monitor
+        <where>
+            <if test="condition.keyword != null">
+                AND name like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.status != null">
+                AND status = #{condition.status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPestMonitorVO" resultType="cn.ecnu.model.vo.PestMonitorVO">
+        SELECT  p.*,g.name as greenHouseName,pr.name as productName
+        FROM  t_pest_monitor p
+        INNER JOIN t_green_houses g ON p.green_house_id = g.id
+        INNER JOIN  t_product pr ON p.product_id = pr.id
+        <where>
+            <if test="condition.keyword != null">
+                AND p.name like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.status != null">
+                AND p.status = #{condition.status}
+            </if>
+        </where>
+        ORDER BY create_time desc
+        LIMIT #{limit},#{size}
+    </select>
+
+</mapper>

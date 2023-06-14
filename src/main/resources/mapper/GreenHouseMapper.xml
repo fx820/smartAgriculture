@@ -11,7 +11,7 @@
                 AND status = #{condition.status}
             </if>
             <if test="condition.zoneId != null">
-                AND zone_id = #{condition.zoneID}
+                AND zone_id = #{condition.zoneId}
             </if>
         </where>
     </select>
@@ -22,13 +22,23 @@
         ON h.ZONE_ID=z.ID
         <where>
             <if test="condition.keyword != null">
-                AND name like concat('%', #{condition.keyword}, '%')
+                AND h.name like concat('%', #{condition.keyword}, '%')
             </if>
             <if test="condition.status != null">
                 AND h.status = #{condition.status}
             </if>
+            <if test="condition.zoneId != null">
+                AND h.zone_id = #{condition.zoneId}
+            </if>
         </where>
         ORDER BY create_time desc
         LIMIT #{limit},#{size}
+    </select>
+
+    <select id="hasHouse" resultType="cn.ecnu.model.vo.GreenHouseVO">
+        SELECT h.id
+        FROM t_green_houses h LEFT JOIN t_zone z
+        ON h.ZONE_ID=z.ID
+        where h.ZONE_ID = #{id}
     </select>
 </mapper>
