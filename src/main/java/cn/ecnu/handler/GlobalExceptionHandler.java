@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Objects;
@@ -107,6 +108,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result<?> handleSystemException() {
         return Result.fail(SYSTEM_ERROR.getCode(), SYSTEM_ERROR.getMsg());
+    }
+
+    /**
+     * 处理空指针的异常
+     * @return
+     */
+    @ExceptionHandler(value =NullPointerException.class)
+    public Result<?> handleNullPointerException(NullPointerException e) {
+        return Result.fail(e.getMessage());
     }
 
 }

@@ -77,7 +77,7 @@ public class GreenHouseController {
 
 
     /*
-     * @intro: 修改农作物信息
+     * @intro: 修改大棚信息
      * @author: zachary
      * @param: GreenHouse
      * @return: Result<?>

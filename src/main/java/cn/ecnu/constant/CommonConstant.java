@@ -89,4 +89,24 @@ public class CommonConstant {
      */
     public final static String PARENT_VIEW = "ParentView";
 
+    /**
+     * 地区可用
+     */
+    public final static Integer ZONE_ENABLE_STATUS = 2;
+
+    /**
+     * 地区不可用
+     */
+    public final static Integer ZONE_NO_ENABLE_STATUS = 1;
+
+    /**
+     * EasyDL API路径
+     */
+    public final static String EASY_DL_URL = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/classification/smart-agriculture";
+    /**
+     * EasyDL 鉴权路径
+     */
+    public final static String EASY_DL_OAUTH = "https://aip.baidubce.com/oauth/2.0/token?client_id=zvxd1RrOmRvjO60fbiKv9gsD&client_secret=A3dYvGr3OU4rG9idoVrkKswgsK1kP3pp&grant_type=client_credentials";
+
+
 }

@@ -19,4 +19,11 @@ public interface GreenHousesMapper extends BaseMapper<GreenHouses> {
     Long countGreenHouse(@Param("condition") ConditionDTO condition);
 
     List<GreenHouseVO> selectGreenHouseVO(Long limit, Long size, ConditionDTO condition);
+
+    /**
+     * 查询该地区是否有大棚
+     * @param
+     * @return
+     */
+    List<GreenHouseVO> hasHouse(Integer id);
 }
