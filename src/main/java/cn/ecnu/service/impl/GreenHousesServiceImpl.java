@@ -1,5 +1,6 @@
 package cn.ecnu.service.impl;
 
+import cn.ecnu.constant.CommonConstant;
 import cn.ecnu.model.dto.ConditionDTO;
 import cn.ecnu.model.dto.DeleteDTO;
 import cn.ecnu.model.dto.GreenHouseDTO;
@@ -7,6 +8,7 @@ import cn.ecnu.model.vo.GreenHouseVO;
 import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.utils.BeanCopyUtils;
 import cn.ecnu.utils.PageUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.ecnu.mapper.GreenHousesMapper;
 import cn.ecnu.entity.GreenHouses;
@@ -68,6 +70,17 @@ public class GreenHousesServiceImpl extends ServiceImpl<GreenHousesMapper, Green
    list = greenHousesMapper.hasHouse(ids[i]);
   }
   return list;
+ }
+
+ @Override
+ public List<GreenHouseVO> selectEnableAll() {
+  LambdaQueryWrapper<GreenHouses> queryWrapper = new LambdaQueryWrapper<>();
+  queryWrapper
+          .select(GreenHouses::getId,GreenHouses::getName)
+          .eq(GreenHouses::getStatus, CommonConstant.ENABLE_STATUS);
+  List<GreenHouses> greenHouses = greenHousesMapper.selectList(queryWrapper);
+  List<GreenHouseVO> greenHouseVOS = BeanCopyUtils.copyBeanList(greenHouses, GreenHouseVO.class);
+  return greenHouseVOS;
  }
 
 }

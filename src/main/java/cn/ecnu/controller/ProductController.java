@@ -46,6 +46,12 @@ public class ProductController {
         return Result.success(productService.listProductVO(condition));
     }
 
+    @ApiOperation(value = "查询所有的农作物信息")
+    @GetMapping("/selectAll")
+    public Result<List<ProductVO>> selectAll(){
+        return Result.success(productService.selectAll());
+    }
+
 
     /*
      * @intro: 增加农产品信息

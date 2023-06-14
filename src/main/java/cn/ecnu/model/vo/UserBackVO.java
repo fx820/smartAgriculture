@@ -27,7 +27,7 @@ public class UserBackVO {
      * 用户昵称
      */
     @ApiModelProperty(value = "用户昵称")
-    private String nickname;
+    private String nickName;
 
     /**
      * 用户头像
