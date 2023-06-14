@@ -11,6 +11,11 @@
           <el-option v-for="item in status" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
+        <el-form-item label="区域">
+            <el-select v-model="queryParams.zoneId" placeholder="所在地区" clearable style="width: 200px">
+                <el-option v-for="item in zoneEnable" :key="item.id" :label="item.name" :value="item.id" />
+            </el-select>
+        </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
       </el-form-item>
@@ -30,10 +35,12 @@
     <el-table border :data="houseList" @selection-change="handleSelectionChange" v-loading="loading">
       <!-- 表格列 -->
       <el-table-column type="selection" width="55" align="center"></el-table-column>
+      <!-- 编号 -->
+      <el-table-column prop="id" width="100" label="编号" align="center"></el-table-column>
       <!-- 大棚名 -->
-      <el-table-column prop="name" width="280" label="大棚名" align="center"></el-table-column>
+      <el-table-column prop="name" width="180" label="大棚名" align="center"></el-table-column>
       <!-- 大棚所在地区 -->
-      <el-table-column prop="zoneName" width="300" label="所在地区" align="center"></el-table-column>
+      <el-table-column prop="zoneName" width="180" label="所在地区" align="center"></el-table-column>
       <!-- 状态 -->
       <el-table-column prop="status" label="大棚使用状态" align="center" width="130px">
         <template #default="scope">
@@ -48,7 +55,7 @@
                <el-icon>
                    <clock />
                </el-icon>
-               <span style="margin-left: 10px">{{ formatDateTime(scope.row.buildTime) }}</span>
+               <span style="margin-left: 10px">{{ formatDate(scope.row.buildTime) }}</span>
           </div>
       </template>
       </el-table-column>
@@ -66,11 +73,17 @@
           <!-- 上一次更新时间 -->
           <el-table-column prop="updateTime" width="270" label="上一次更新时间" align="center">
               <template #default="scope">
-                  <div class="create-time">
+                  <div class="create-time" v-if="scope.row.updateTime != null">
                       <el-icon>
                           <clock />
                       </el-icon>
                       <span style="margin-left: 10px">{{ formatDateTime(scope.row.updateTime) }}</span>
+                  </div>
+                  <div class="create-time" v-if="scope.row.updateTime == null">
+                      <el-icon>
+                          <clock />
+                      </el-icon>
+                      <span style="margin-left: 10px">{{ formatDateTime(scope.row.createTime) }}</span>
                   </div>
               </template>
           </el-table-column>
@@ -96,13 +109,28 @@
         <el-form-item label="大棚名称" prop="name">
           <el-input placeholder="请输入大棚名称" v-model="houseForm.name" />
         </el-form-item>
-        <el-form-item label="种植状态">
+        <el-form-item label="大棚使用状态">
           <el-radio-group v-model="houseForm.status">
             <el-radio v-for="dict in status" :key="dict.value" :label="dict.value">
               {{ dict.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="大棚所在区域">
+          <el-select v-model="houseForm.zoneId" placeholder="大棚所在区域" clearable style="width: 200px">
+            <el-option v-for="item in zoneEnable" :key="item.name" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="建造时间">
+            <el-date-picker
+                    v-model="houseForm.buildTime"
+                    type="date"
+                    placeholder="请选择大棚建造日期"
+                    format="YYYY/MM/DD"
+                    value-format="YYYY-MM-DD"
+            />
+        </el-form-item>
+
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -117,13 +145,15 @@
 <script setup lang="ts">
 import { addHouse, deleteHouse, getHouseList, updateHouse } from "@/api/house";
 import { House, HouseForm, HouseQuery } from "@/api/house/types";
-import { formatDateTime } from "@/utils/date";
+import {getZones} from "@/api/zone";
+import {formatDate, formatDateTime} from "@/utils/date";
 import { messageConfirm, notifySuccess } from "@/utils/modal";
 import {FormInstance, FormRules, UploadRawFile} from 'element-plus';
 import {computed, nextTick, onMounted, reactive, ref, toRefs} from "vue";
 import {getToken, token_prefix} from "@/utils/token";
 import * as imageConversion from "image-conversion";
 import {AxiosResponse} from "axios/index";
+import {Zone} from "@/api/zone/types";
 const houseFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
   name: [{ required: true, message: "请输入大棚名称", trigger: "blur" }]
@@ -155,6 +185,7 @@ const data = reactive({
       label: "使用中",
     },
   ],
+  zoneEnable: [] as Zone[],
   houseForm: {} as HouseForm,
   houseIdList: [] as number[],
   houseList: [] as House[],
@@ -170,9 +201,11 @@ const {
   houseForm,
   houseIdList,
   houseList,
+  zoneEnable
 } = toRefs(data);
 
-const handleSelectionChange = (selection: house[]) => {
+
+const handleSelectionChange = (selection: House[]) => {
   houseIdList.value = selection.map((item) => item.id);
 };
 const reset = () => {
@@ -184,7 +217,8 @@ const openModel = async (house?: House) => {
     title.value = "修改大棚";
     houseForm.value.id = house.id;
     houseForm.value.name = house.name;
-    houseForm.value.zoneId = house.zoneId;
+    // houseForm.value.zoneId = house.zoneId;
+    houseForm.value.zoneName = house.zoneName;
     houseForm.value.status = house.status;
     houseForm.value.buildTime = house.buildTime;
   } else {
@@ -192,7 +226,7 @@ const openModel = async (house?: House) => {
     houseForm.value = {
       id: undefined,
       name: "",
-      zoneId: 0,
+      zoneId: undefined,
       status: 2,
       buildTime: "",
     };
@@ -248,12 +282,19 @@ const getList = () => {
   });
 };
 
+const getEnableZoneList = () =>{
+    getZones().then(({data})=>{
+       zoneEnable.value = data.data;
+    })
+}
+
 const handleQuery = () => {
   queryParams.value.current = 1;
   getList();
 };
 onMounted(() => {
   getList();
+  getEnableZoneList();
 });
 </script>
 

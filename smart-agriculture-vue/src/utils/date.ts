@@ -10,3 +10,4 @@ export function formatDate(date: string | Date | null, format = "YYYY-MM-DD"): s
 export function formatDateTime(date: string | Date, format = "YYYY-MM-DD HH:mm:ss"): string {
   return formatDate(date, format);
 }
+

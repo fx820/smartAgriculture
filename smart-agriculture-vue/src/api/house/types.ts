@@ -1,4 +1,5 @@
 import { PageQuery } from "@/model";
+import {Zone} from "@/api/zone/types";
 
 /**
  * 大棚
@@ -72,7 +73,10 @@ export interface HouseForm {
    * 所在区域id
    */
   zoneId: number;
-
+  /**
+   * 所在区域名称
+   */
+  zoneName: string;
   /**
    * 大棚使用状态（1：荒废 2：使用中）
    */
