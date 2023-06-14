@@ -39,4 +39,6 @@ public interface GreenHousesService extends IService<GreenHouses> {
     void updateGreenHouse(GreenHouseDTO greenHouse);
 
     PageResult<GreenHouseVO> listGreenHouseVO(ConditionDTO condition);
+
+    List<GreenHouseVO> hasHouse(Integer[] ids);
 }
