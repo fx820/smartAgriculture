@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        <!--   密码登录     -->
         <el-form ref="ruleFormRef" :model="loginForm" :rules="rules" class="login-form">
             <h3 class="title">智慧农业后台管理系统</h3>
             <el-form-item prop="username">
@@ -23,7 +24,7 @@
         </el-form>
         <!--  底部  -->
         <div class="el-login-footer">
-            <span>Copyright © 2022 - {{ new Date().getFullYear() }} By 阿冬</span>
+            <span>Copyright © 2023 - {{ new Date().getFullYear() }} By ECNU-zachary's Team</span>
         </div>
     </div>
 </template>
@@ -32,7 +33,9 @@
 import router from "@/router";
 import useStore from '@/store';
 import { FormInstance, FormRules } from 'element-plus';
-import { reactive, ref } from 'vue';
+import {reactive, ref, toRefs} from 'vue';
+import SvgIcon from "@/components/SvgIcon/index.vue";
+
 const { user } = useStore();
 const ruleFormRef = ref<FormInstance>();
 const loading = ref(false);
@@ -44,6 +47,7 @@ const rules = reactive<FormRules>({
     username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
     password: [{ required: true, message: "请输入密码", trigger: "blur" }, { min: 6, message: "密码不能少于6位", trigger: "blur" }],
 });
+
 const handleLogin = async (formEl: FormInstance | undefined) => {
     if (!formEl) return;
     await formEl.validate((valid) => {

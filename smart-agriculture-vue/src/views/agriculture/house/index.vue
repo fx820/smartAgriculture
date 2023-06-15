@@ -128,6 +128,7 @@
                     placeholder="请选择大棚建造日期"
                     format="YYYY/MM/DD"
                     value-format="YYYY-MM-DD"
+                    :disabled-date="disabledDate"
             />
         </el-form-item>
 
@@ -188,7 +189,7 @@ const data = reactive({
   zoneEnable: [] as Zone[],
   houseForm: {} as HouseForm,
   houseIdList: [] as number[],
-  houseList: [] as House[],
+  houseList: [] as House[]
 });
 const {
   count,
@@ -204,6 +205,10 @@ const {
   zoneEnable
 } = toRefs(data);
 
+//判断选择的时间是否超过当前时间
+const disabledDate = (time: Date) => {
+    return time.getTime() > Date.now()
+}
 
 const handleSelectionChange = (selection: House[]) => {
   houseIdList.value = selection.map((item) => item.id);
@@ -216,9 +221,7 @@ const openModel = async (house?: House) => {
   if (house !== undefined) {
     title.value = "修改大棚";
     houseForm.value.id = house.id;
-    houseForm.value.name = house.name;
-    // houseForm.value.zoneId = house.zoneId;
-    houseForm.value.zoneName = house.zoneName;
+    houseForm.value.zoneId = house.zoneId;
     houseForm.value.status = house.status;
     houseForm.value.buildTime = house.buildTime;
   } else {
@@ -228,7 +231,7 @@ const openModel = async (house?: House) => {
       name: "",
       zoneId: undefined,
       status: 2,
-      buildTime: "",
+      buildTime: ""
     };
   }
   addOrUpdate.value = true;

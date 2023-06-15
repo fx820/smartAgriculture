@@ -1,7 +1,8 @@
 import { Result } from "@/model";
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
-import { LoginForm } from "./types";
+import {LoginForm} from "./types";
+
 
 /**
  * 用户登录

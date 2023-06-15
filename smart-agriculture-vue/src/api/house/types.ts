@@ -64,7 +64,7 @@ export interface HouseForm {
   /**
    * 大棚id
    */
-  id: number;
+  id?: number;
   /**
    * 大棚名称
    */
@@ -72,11 +72,7 @@ export interface HouseForm {
   /**
    * 所在区域id
    */
-  zoneId: number;
-  /**
-   * 所在区域名称
-   */
-  zoneName: string;
+  zoneId?: number;
   /**
    * 大棚使用状态（1：荒废 2：使用中）
    */

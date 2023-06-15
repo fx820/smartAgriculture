@@ -36,14 +36,13 @@
       <!-- 登录方式 -->
       <el-table-column prop="loginType" label="登录方式" align="center" width="100">
         <template #default="scope">
-          <el-tag type="success" v-if="scope.row.loginType == 1">邮箱</el-tag>
-          <el-tag v-if="scope.row.loginType == 2">QQ</el-tag>
-          <el-tag type="danger" v-if="scope.row.loginType == 3">Gitee</el-tag>
-          <el-tag type="info" v-if="scope.row.loginType == 4">Github</el-tag>
+          <el-tag type="success" v-if="scope.row.loginType == 1">账号</el-tag>
+          <el-tag v-if="scope.row.loginType == 2">邮箱</el-tag>
+          <el-tag type="danger" v-if="scope.row.loginType == 3">手机号</el-tag>
         </template>
       </el-table-column>
       <!-- 用户角色 -->
-      <el-table-column prop="roleList" label="用户角色" align="center">
+      <el-table-column prop="roleList" label="用户角色" align="center" width="100">
         <template #default="scope">
           <el-tag v-for="item in scope.row.roleList" :key="item.id" style="margin-right:4px;margin-top:4px">
             {{ item.roleName }}
@@ -142,20 +141,16 @@ const data = reactive({
   typeList: [
     {
       value: 1,
-      label: "邮箱",
+      label: "账号",
     },
     {
       value: 2,
-      label: "QQ",
+      label: "邮箱",
     },
     {
       value: 3,
-      label: "Gitee",
-    },
-    {
-      value: 4,
-      label: "Github",
-    },
+      label: "手机号",
+    }
   ],
   userList: [] as User[],
   userForm: {} as UserForm,
