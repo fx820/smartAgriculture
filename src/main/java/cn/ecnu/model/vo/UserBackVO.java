@@ -30,6 +30,30 @@ public class UserBackVO {
     private String nickName;
 
     /**
+     * 用户名
+     */
+    @ApiModelProperty(value = "用户名")
+    private String userName;
+
+    /**
+     * 邮箱
+     */
+    @ApiModelProperty(value = "邮箱")
+    private String email;
+
+    /**
+     * 手机号
+     */
+    @ApiModelProperty(value = "手机号")
+    private String phone;
+
+    /**
+     * 地址
+     */
+    @ApiModelProperty(value = "地址")
+    private String address;
+
+    /**
      * 用户头像
      */
     @ApiModelProperty(value = "用户头像")

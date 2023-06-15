@@ -4,8 +4,12 @@
 
     <resultMap id="UserBackMap" type="cn.ecnu.model.vo.UserBackVO">
         <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
         <result column="nick_name" property="nickName"/>
         <result column="avatar" property="avatar"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
         <result column="ip_address" property="ipAddress"/>
         <result column="ip_source" property="ipSource"/>
         <result column="login_type" property="loginType"/>
@@ -36,7 +40,11 @@
     <select id="listUserBackVO" resultMap="UserBackMap">
         SELECT
         u.id,
+        user_name,
         nick_name,
+        email,
+        phone,
+        address,
         avatar,
         ip_address,
         ip_source,

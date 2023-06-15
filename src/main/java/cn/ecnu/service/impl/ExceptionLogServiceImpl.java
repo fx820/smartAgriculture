@@ -30,7 +30,6 @@ public class ExceptionLogServiceImpl extends ServiceImpl<ExceptionLogMapper, Exc
         // 查询异常日志数量
         Long count = exceptionLogMapper.selectCount(new LambdaQueryWrapper<ExceptionLog>()
                 .like(StringUtils.hasText(condition.getOptModule()), ExceptionLog::getModule, condition.getOptModule())
-                .or()
                 .like(StringUtils.hasText(condition.getKeyword()), ExceptionLog::getDescription, condition.getKeyword())
         );
         if (count == 0) {

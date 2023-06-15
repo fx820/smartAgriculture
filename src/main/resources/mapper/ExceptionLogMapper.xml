@@ -23,7 +23,7 @@
                 `module` like concat('%',#{condition.optModule},'%')
             </if>
             <if test="condition.keyword!=null">
-                OR description like concat('%',#{condition.keyword},'%')
+                AND description like concat('%',#{condition.keyword},'%')
             </if>
         </where>
         ORDER BY id DESC LIMIT #{limit},#{size} ) temp
