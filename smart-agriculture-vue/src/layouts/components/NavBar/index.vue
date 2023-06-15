@@ -7,7 +7,7 @@
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <!-- 博客首页 -->
-        <el-tooltip content="博客首页" effect="dark" placement="bottom">
+        <el-tooltip content="智慧农业首页" effect="dark" placement="bottom">
           <div class="right-menu-item hover-effect">
             <svg-icon @click="openHome" icon-class="home" size="1.2rem" />
           </div>
