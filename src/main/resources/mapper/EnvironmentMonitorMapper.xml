@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ecnu.mapper.EnvironmentMonitorMapper">
+
+    <select id="countEnvironmentMonitorVO" resultType="java.lang.Long">
+        select count(*) from t_environment_monitor em inner join t_green_houses gh on em.GREEN_HOUSE_ID = gh.ID
+        <where>
+            <if test="condition.keyword != null">
+                AND gh.name like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.status != null">
+                AND em.status = #{condition.status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEnvironmentMonitorVO" resultType="cn.ecnu.model.vo.EnvironmentMonitorVO">
+        select em.*,gh.NAME as name,em.sensor_ids as sensorIds from t_environment_monitor em inner join t_green_houses gh on em.GREEN_HOUSE_ID = gh.ID
+        <where>
+            <if test="condition.keyword != null">
+                AND gh.name like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.status != null">
+                AND em.status = #{condition.status}
+            </if>
+        </where>
+        ORDER BY create_time desc
+        LIMIT #{limit},#{size}
+    </select>
+</mapper>
