@@ -25,7 +25,12 @@ public enum FilePathEnum {
     /**
      * 虫害图片路径
      */
-    PEST("/pest/", "/pest", "虫害图片路径");
+    PEST("/pest/", "/pest", "虫害图片路径"),
+
+    /**
+     * 设备路径
+     */
+    SENSOR("/sensor/", "/sensor", "设备路径");
 
     /**
      * 路径

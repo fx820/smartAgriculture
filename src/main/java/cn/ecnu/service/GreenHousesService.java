@@ -5,6 +5,7 @@ import cn.ecnu.model.dto.DeleteDTO;
 import cn.ecnu.model.dto.GreenHouseDTO;
 import cn.ecnu.model.vo.GreenHouseVO;
 import cn.ecnu.model.vo.PageResult;
+import cn.ecnu.model.vo.SensorVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.ecnu.entity.GreenHouses;
 
@@ -43,4 +44,10 @@ public interface GreenHousesService extends IService<GreenHouses> {
     List<GreenHouseVO> hasHouse(Integer[] ids);
 
     List<GreenHouseVO> selectEnableAll();
+
+    /**
+     * 根据大棚编号查询设备信息
+     * @return
+     */
+    PageResult<SensorVO> viewSensors(Integer id);
 }

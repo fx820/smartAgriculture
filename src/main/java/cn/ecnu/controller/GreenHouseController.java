@@ -7,6 +7,7 @@ import cn.ecnu.model.dto.GreenHouseDTO;
 import cn.ecnu.model.vo.GreenHouseVO;
 import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.model.vo.Result;
+import cn.ecnu.model.vo.SensorVO;
 import cn.ecnu.service.GreenHousesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +35,7 @@ public class GreenHouseController {
     private GreenHousesService greenHousesService;
 
     /*
-     * @intro:
+     * @intro:查看大棚列表
      * @author: zachary
      * @param: condition 查询条件
      * @return: Result<PageResult<GreenHouseVO>> 分页大棚列表
@@ -50,6 +51,16 @@ public class GreenHouseController {
     public Result<List<GreenHouseVO>> selectEnableAll(){
         return Result.success(greenHousesService.selectEnableAll());
     }
+
+    /**
+     * 根据大棚编号查询设备信息
+     */
+    @ApiOperation(value = "根据大棚编号查询设备信息")
+    @GetMapping("/viewSensors")
+    public Result<PageResult<SensorVO>> viewSensors(@RequestParam("id") Integer id){
+        return Result.success(greenHousesService.viewSensors(id));
+    }
+
 
     /*
      * @intro: 增加大棚信息
