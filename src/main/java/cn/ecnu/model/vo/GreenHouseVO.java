@@ -1,5 +1,6 @@
 package cn.ecnu.model.vo;
 
+import cn.ecnu.entity.Sensor;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.Api;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @intro: 大棚信息显示
@@ -43,10 +45,9 @@ public class GreenHouseVO {
     private Integer status;
     //创建时间
     @ApiModelProperty(value = "数据创建时间")
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
     //更新时间
     @ApiModelProperty(value = "上一次更新时间")
-    @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
+    
 }

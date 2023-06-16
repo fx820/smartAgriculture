@@ -1,14 +1,20 @@
 package cn.ecnu.service.impl;
 
 import cn.ecnu.constant.CommonConstant;
+import cn.ecnu.entity.Sensor;
+import cn.ecnu.entity.SensorGreenHouse;
+import cn.ecnu.mapper.SensorGreenHouseMapper;
+import cn.ecnu.mapper.SensorMapper;
 import cn.ecnu.model.dto.ConditionDTO;
 import cn.ecnu.model.dto.DeleteDTO;
 import cn.ecnu.model.dto.GreenHouseDTO;
 import cn.ecnu.model.vo.GreenHouseVO;
 import cn.ecnu.model.vo.PageResult;
+import cn.ecnu.model.vo.SensorVO;
 import cn.ecnu.utils.BeanCopyUtils;
 import cn.ecnu.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.ecnu.mapper.GreenHousesMapper;
 import cn.ecnu.entity.GreenHouses;
@@ -81,6 +87,18 @@ public class GreenHousesServiceImpl extends ServiceImpl<GreenHousesMapper, Green
   List<GreenHouses> greenHouses = greenHousesMapper.selectList(queryWrapper);
   List<GreenHouseVO> greenHouseVOS = BeanCopyUtils.copyBeanList(greenHouses, GreenHouseVO.class);
   return greenHouseVOS;
+ }
+
+ @Override
+ public PageResult<SensorVO> viewSensors(Integer id) {
+
+  Long count = greenHousesMapper.countSensor(id);
+  if (count==0){
+   return new PageResult<>();
+  }
+
+  List<SensorVO> sensorVOS = greenHousesMapper.viewSensors(id, PageUtils.getLimit(), PageUtils.getSize());
+  return new PageResult<>(sensorVOS,count);
  }
 
 }

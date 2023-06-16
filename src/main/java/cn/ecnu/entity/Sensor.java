@@ -26,6 +26,8 @@ public class Sensor {
         private String name;
         //传感器类型
         private String type;
+        //图片路径
+         private String image;
         //创建时间
         @TableField(fill = FieldFill.INSERT)
         private Date createTime;
