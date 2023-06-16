@@ -1,6 +1,7 @@
 package cn.ecnu.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -24,17 +25,17 @@ public class EnvironmentMonitor {
         //环境监测数据编号
         private Integer id;
         //空气温度
-        private String airTemperature;
+        private Double airTemperature;
         //空气湿度
-        private String airHumidity;
+        private Double airHumidity;
         //土壤温度
-        private String soilTemperature;
+        private Double soilTemperature;
         //土壤湿度
-        private String soilHumidity;
+        private Double soilHumidity;
         //二氧化碳含量
-        private String c02Level;
+        private Double c02Level;
         //光照度
-        private String lightLevel;
+        private Double lightLevel;
         //传感器编号(可能对应多个）
         private String sensorIds;
         //大棚编号
