@@ -58,6 +58,17 @@ export interface HouseQuery extends PageQuery {
 }
 
 /**
+ * 分页查询
+ */
+
+export interface pageSensorQuery extends PageQuery{
+  /**
+   * 大棚编号
+   */
+  id: number;
+}
+
+/**
  * 农作物表单
  */
 export interface HouseForm {
@@ -83,3 +94,8 @@ export interface HouseForm {
   buildTime: string;
 }
 
+export interface Sensor{
+  id?: number;
+  name: string;
+  type: string;
+}

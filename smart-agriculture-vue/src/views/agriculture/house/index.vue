@@ -48,6 +48,14 @@
             <el-tag v-if="scope.row.status == 2" type="success">使用中</el-tag>
         </template>
       </el-table-column>
+      <!--  查看大棚信息   -->
+        <el-table-column width="270" label="查看设备" align="center">
+            <template #default="scope">
+                <el-button type="primary" icon="view" link @click="openModelView(scope.row)">
+                    查看设备
+                </el-button>
+            </template>
+        </el-table-column>
       <!-- 建造时间 -->
       <el-table-column prop="buildTime" width="270" label="建造时间" align="center">
         <template #default="scope">
@@ -140,21 +148,39 @@
         </div>
       </template>
     </el-dialog>
+
+      <!--   查看设备信息   -->
+      <el-dialog :title="title" v-model="view"  append-to-body width="680">
+          <!-- 表格展示 -->
+          <el-table border :data="sensorList"  v-loading="loading">
+              <!-- 编号 -->
+              <el-table-column prop="id" width="100" label="编号" align="center"></el-table-column>
+              <!-- 设备名 -->
+              <el-table-column prop="name" width="180" label="设备名" align="center"></el-table-column>
+              <!-- 设备类型 -->
+              <el-table-column prop="type" width="180" label="设备类型" align="center"></el-table-column>
+              <el-table-column label="设备图片" align="center" #default="scope" width="180">
+                  <el-image :src="scope.row.image"/>
+              </el-table-column>
+          </el-table>
+          <!-- 分页 -->
+          <pagination v-if="count > 0" :total="count" v-model:page="viewParams.current" v-model:limit="viewParams.size"
+                      @pagination="viewPage(viewId)" />
+      </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { addHouse, deleteHouse, getHouseList, updateHouse } from "@/api/house";
-import { House, HouseForm, HouseQuery } from "@/api/house/types";
+import {addHouse, deleteHouse, getHouseList, updateHouse, viewSensors} from "@/api/house";
+import {House, HouseForm, HouseQuery, pageSensorQuery, Sensor} from "@/api/house/types";
 import {getZones} from "@/api/zone";
 import {formatDate, formatDateTime} from "@/utils/date";
 import { messageConfirm, notifySuccess } from "@/utils/modal";
-import {FormInstance, FormRules, UploadRawFile} from 'element-plus';
-import {computed, nextTick, onMounted, reactive, ref, toRefs} from "vue";
+import {FormInstance, FormRules} from 'element-plus';
+import {computed, onMounted, reactive, ref, toRefs} from "vue";
 import {getToken, token_prefix} from "@/utils/token";
-import * as imageConversion from "image-conversion";
-import {AxiosResponse} from "axios/index";
 import {Zone} from "@/api/zone/types";
+import {PageQuery} from "@/model";
 const houseFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
   name: [{ required: true, message: "请输入大棚名称", trigger: "blur" }]
@@ -171,11 +197,17 @@ const data = reactive({
   showSearch: true,
   loading: false,
   title: "",
+  viewId: 0,
   addOrUpdate: false,
+  view: false,
   queryParams: {
     current: 1,
     size: 10,
   } as HouseQuery,
+  viewParams:{
+    current: 1,
+    size: 3,
+  } as pageSensorQuery,
   status: [
     {
       value: 1,
@@ -189,7 +221,8 @@ const data = reactive({
   zoneEnable: [] as Zone[],
   houseForm: {} as HouseForm,
   houseIdList: [] as number[],
-  houseList: [] as House[]
+  houseList: [] as House[],
+  sensorList : [] as Sensor[],
 });
 const {
   count,
@@ -197,11 +230,15 @@ const {
   loading,
   title,
   addOrUpdate,
+  view,
+  viewId,
   queryParams,
+  viewParams,
   status,
   houseForm,
   houseIdList,
   houseList,
+  sensorList,
   zoneEnable
 } = toRefs(data);
 
@@ -236,6 +273,26 @@ const openModel = async (house?: House) => {
   }
   addOrUpdate.value = true;
 };
+
+const openModelView = async (house?:House)=>{
+    //显示设备信息
+    view.value = true;
+    if (house!== undefined){
+        //查询设备信息
+       viewId.value = house.id;
+       await viewPage(house.id);
+    }
+
+}
+const viewPage = async (id:number)=>{
+    //查询分页信息
+    viewSensors(id,viewParams.value.current,viewParams.value.size).then(({data})=>{
+        sensorList.value = data.data.recordList;
+        count.value = data.data.count;
+    });
+}
+
+
 const submitForm = () => {
   houseFormRef.value?.validate((valid) => {
     if (valid) {
@@ -301,4 +358,8 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-card{
+    border-radius: 30px;
+}
+</style>

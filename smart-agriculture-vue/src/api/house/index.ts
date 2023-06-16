@@ -1,7 +1,8 @@
-import { PageResult, Result } from "@/model";
+import {PageQuery, PageResult, Result} from "@/model";
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
-import { House, HouseForm, HouseQuery } from "./types";
+import {House, HouseForm, HouseQuery, pageSensorQuery, Sensor} from "./types";
+import {Ref, UnwrapRef} from "vue";
 
 /**
  * 查看大棚信息
@@ -58,6 +59,13 @@ export function updateHouse(data: HouseForm): AxiosPromise<Result<null>> {
 export function getHouses(): AxiosPromise<Result<House[]>> {
   return request({
     url: "/house/selectEnableAll",
+    method: "get"
+  });
+}
+
+export function viewSensors(id:number,current:number,size:number):AxiosPromise<Result<PageResult<Sensor[]>>>{
+  return request({
+    url: "/house/viewSensors?id="+id+"&current="+current+"&size="+size,
     method: "get"
   });
 }
