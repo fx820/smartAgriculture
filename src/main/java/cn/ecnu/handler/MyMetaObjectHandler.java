@@ -23,6 +23,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
         setFieldValByName("createTime", new Date(), metaObject);
+        setFieldValByName("plantTime", new Date(), metaObject);
 
     }
 

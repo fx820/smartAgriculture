@@ -33,7 +33,7 @@
       <el-table-column prop="soilHumidity" width="100" label="土壤湿度" align="center"></el-table-column>
       <el-table-column prop="c02Level" width="100" label="二氧化碳含量" align="center"></el-table-column>
       <el-table-column prop="lightLevel" width="100" label="光照度" align="center"></el-table-column>
-      <el-table-column prop="sensorIds" width="100" label="传感器编号" align="center"></el-table-column>
+<!--      <el-table-column prop="sensorIds" width="100" label="传感器编号" align="center"></el-table-column>-->
       <!-- 创建时间 -->
       <el-table-column prop="createTime" width="270" label="创建时间" align="center">
         <template #default="scope">

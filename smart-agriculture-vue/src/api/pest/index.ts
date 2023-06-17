@@ -1,7 +1,7 @@
 import { PageResult, Result } from "@/model";
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
-import { Pest, PestForm, PestQuery } from "./types";
+import { Pest, AddPestForm,UpdatePestForm, PestQuery } from "./types";
 
 /**
  * 查看虫害信息列表
@@ -32,7 +32,7 @@ export function deletePest(data: number[]): AxiosPromise<Result<null>> {
  * 添加虫害信息
  * @param data 虫害信息信息
  */
-export function addPest(data: PestForm): AxiosPromise<Result<null>> {
+export function addPest(data: AddPestForm): AxiosPromise<Result<null>> {
   return request({
     url: "/pest/add",
     method: "post",
@@ -44,7 +44,7 @@ export function addPest(data: PestForm): AxiosPromise<Result<null>> {
  * 修改虫害信息
  * @param data 虫害信息信息
  */
-export function updatePest(data: PestForm): AxiosPromise<Result<null>> {
+export function updatePest(data: UpdatePestForm): AxiosPromise<Result<null>> {
   return request({
     url: "/pest/update",
     method: "put",

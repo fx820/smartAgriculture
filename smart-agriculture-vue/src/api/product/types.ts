@@ -74,3 +74,12 @@ export interface ProductForm {
   photo: string;
 }
 
+/**
+ * 种植表单
+ */
+export interface PlantForm{
+  productId: number;
+  status: number;
+  greenHouseId?: number;
+}
+

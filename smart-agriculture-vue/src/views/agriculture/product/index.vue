@@ -33,17 +33,17 @@
         <!-- 编号 -->
         <el-table-column prop="id" width="100" label="编号" align="center"></el-table-column>
       <!-- 农作物名 -->
-      <el-table-column prop="name" width="280" label="农作物名" align="center"></el-table-column>
+      <el-table-column prop="name" width="200" label="农作物名" align="center"></el-table-column>
       <!-- 农作物种植周期 -->
-      <el-table-column prop="cycle" width="300" label="种植周期" align="center"></el-table-column>
+      <el-table-column prop="cycle" width="180" label="种植周期(天)" align="center"></el-table-column>
       <!-- 状态 -->
-      <el-table-column prop="status" label="种植状态" align="center">
+      <el-table-column prop="status" label="种植状态" align="center" width="160">
         <template #default="scope">
             <el-tag v-if="scope.row.status == 0" type="info">未种植</el-tag>
             <el-tag v-if="scope.row.status == 1" type="success">种植中</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="农作物图片" align="center" #default="scope">
+      <el-table-column label="农作物图片" align="center" #default="scope" width="180">
           <el-image :src="scope.row.photo"/>
       </el-table-column>
       <!-- 创建时间 -->
@@ -60,6 +60,9 @@
       <!-- 操作 -->
       <el-table-column width="270" label="操作" align="center">
         <template #default="scope">
+          <el-button type="primary" icon="Edit" link @click="openPlantModel(scope.row)">
+            种植
+          </el-button>
           <el-button type="primary" icon="Edit" link @click="openModel(scope.row)">
             编辑
           </el-button>
@@ -76,15 +79,11 @@
     <!-- 添加或修改对话框 -->
     <el-dialog :title="title" v-model="addOrUpdate" width="500px" append-to-body>
       <el-form ref="productFormRef" :model="productForm" :rules="rules" label-width="100px">
-        <el-form-item label="农作物名称" prop="name">
+        <el-form-item label="农作物名称" prop="name" v-if="productForm.name=='' ">
           <el-input placeholder="请输入农作物名称" v-model="productForm.name" />
         </el-form-item>
-        <el-form-item label="种植状态">
-          <el-radio-group v-model="productForm.status">
-            <el-radio v-for="dict in status" :key="dict.value" :label="dict.value">
-              {{ dict.label }}
-            </el-radio>
-          </el-radio-group>
+        <el-form-item label="农作物名称" prop="name" v-else>
+          <el-input placeholder="请输入农作物名称" v-model="productForm.name" disabled />
         </el-form-item>
           <el-form-item label="种植周期(天)">
               <el-input-number
@@ -102,7 +101,7 @@
                   <div class="el-upload__text" v-if="productForm.photo === ''">
                       将文件拖到此处，或<em>点击上传</em>
                   </div>
-                  <img v-else :src="productForm.photo" width="360" />
+                  <img v-else :src="productForm.photo" width="180" />
               </el-upload>
           </el-form-item>
       </el-form>
@@ -113,12 +112,33 @@
         </div>
       </template>
     </el-dialog>
+
+    <!--  种植农作物  -->
+    <el-dialog :title="title" v-model="plantModel" width="500px" append-to-body>
+      <el-form :model="plantForm" :rules="plantRules" label-width="100px">
+        <el-form-item label="农作物名称" prop="name">
+          <el-input placeholder="请输入农作物名称" v-model="productForm.name" disabled/>
+        </el-form-item>
+
+        <el-form-item label="种植大棚" prop="houseId">
+          <el-select v-model="plantForm.greenHouseId" placeholder="大棚所在区域" clearable style="width: 200px">
+            <el-option v-for="item in allHouse" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitPlantForm">确 定</el-button>
+          <el-button @click="plantModel = false">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { addProduct, deleteProduct, getProductList, updateProduct } from "@/api/product";
-import { Product, ProductForm, ProductQuery } from "@/api/product/types";
+import {addProduct, deleteProduct, getProductList, plant, updateProduct} from "@/api/product";
+import {PlantForm, Product, ProductForm, ProductQuery} from "@/api/product/types";
 import { formatDateTime } from "@/utils/date";
 import { messageConfirm, notifySuccess } from "@/utils/modal";
 import {FormInstance, FormRules, UploadRawFile} from 'element-plus';
@@ -126,9 +146,15 @@ import {computed, nextTick, onMounted, reactive, ref, toRefs} from "vue";
 import {getToken, token_prefix} from "@/utils/token";
 import * as imageConversion from "image-conversion";
 import {AxiosResponse} from "axios/index";
+import {getHouses} from "@/api/house";
+import {AllHouse} from "@/api/house/types";
 const productFormRef = ref<FormInstance>();
+const plantFormRef = ref<FormInstance>();
 const rules = reactive<FormRules>({
   name: [{ required: true, message: "请输入农作物名称", trigger: "blur" }]
+});
+const plantRules = reactive<FormRules>({
+  houseId: [{ required: true, message: "请选择大棚", trigger: "blur" }]
 });
 
 const authorization = computed(() => {
@@ -161,6 +187,7 @@ const data = reactive({
   loading: false,
   title: "",
   addOrUpdate: false,
+  plantModel:false,
   queryParams: {
     current: 1,
     size: 10,
@@ -178,6 +205,8 @@ const data = reactive({
   productForm: {} as ProductForm,
   productIdList: [] as number[],
   productList: [] as Product[],
+  plantForm: {} as PlantForm,
+  allHouse: [] as AllHouse[],
 });
 const {
   count,
@@ -185,8 +214,11 @@ const {
   loading,
   title,
   addOrUpdate,
+  plantModel,
   queryParams,
   status,
+  allHouse,
+  plantForm,
   productForm,
   productIdList,
   productList,
@@ -197,6 +229,8 @@ const handleSelectionChange = (selection: Product[]) => {
 };
 const reset = () => {
   productFormRef.value?.clearValidate();
+  plantFormRef.value?.clearValidate();
+
 };
 const openModel = async (product?: Product) => {
   reset();
@@ -219,6 +253,37 @@ const openModel = async (product?: Product) => {
   }
   addOrUpdate.value = true;
 };
+
+/**
+ * 打开种植表单
+ */
+
+const openPlantModel = async (product?: Product) => {
+  reset();
+  if (product != null) {
+    title.value = "种植农作物";
+    productForm.value.name = product.name;
+    plantForm.value.productId = product.id;
+    plantForm.value.status = 0;
+    plantForm.value.greenHouseId = undefined;
+  }
+  plantModel.value = true;
+};
+
+/**
+ * 提交种植表单
+ */
+const submitPlantForm = () => {
+  console.log("提交")
+  plant(plantForm.value).then(({data}) => {
+    if (data.flag) {
+      notifySuccess(data.msg);
+      getList();
+    }
+    plantModel.value = false;
+  })
+};
+
 const submitForm = () => {
   productFormRef.value?.validate((valid) => {
     if (valid) {
@@ -268,12 +333,18 @@ const getList = () => {
   });
 };
 
+const getHouse =() =>{
+  getHouses().then(({data}) =>{
+    allHouse.value = data.data;
+  })
+}
 const handleQuery = () => {
   queryParams.value.current = 1;
   getList();
 };
 onMounted(() => {
   getList();
+  getHouse();
 });
 </script>
 

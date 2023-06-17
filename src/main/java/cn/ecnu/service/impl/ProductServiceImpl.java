@@ -86,11 +86,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public void updateProduct(ProductDTO product) {
-        Product hasProduct = productMapper.selectOne(new LambdaQueryWrapper<Product>()
-                .select(Product::getId)
-                .eq(Product::getName,product.getName())
-        );
-        Assert.isNull(hasProduct,product.getName()+"已存在,无法更改！");
         Product updateProduct = BeanCopyUtils.copyBean(product, Product.class);
         baseMapper.updateById(updateProduct);
     }

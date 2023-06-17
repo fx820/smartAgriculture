@@ -99,3 +99,8 @@ export interface Sensor{
   name: string;
   type: string;
 }
+
+export interface AllHouse{
+  id: number;
+  name: string;
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ecnu.mapper.PlantMapper">
+
+    <select id="countPlantVO" resultType="java.lang.Long">
+        select count(*) from
+        t_plant pl
+            inner join t_product pr on pl.product_id = pr.id
+            inner join t_green_houses gh on pl.green_house_id = gh.id
+        <where>
+            <if test="condition.keyword != null">
+                AND pr.name like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.status != null">
+                AND pl.status = #{condition.status}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPlantVO" resultType="cn.ecnu.model.vo.PlantVO">
+        select pl.*,pr.name as productName,gh.name as houseName from
+        t_plant pl
+        inner join t_product pr on pl.product_id = pr.id
+        inner join t_green_houses gh on pl.green_house_id = gh.id
+        <where>
+            <if test="condition.keyword != null">
+                AND pr.name like concat('%', #{condition.keyword}, '%')
+            </if>
+            <if test="condition.status != null">
+                AND pl.status = #{condition.status}
+            </if>
+        </where>
+        ORDER BY pl.plant_time desc
+        LIMIT #{limit},#{size}
+    </select>
+</mapper>

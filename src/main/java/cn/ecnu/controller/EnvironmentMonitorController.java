@@ -6,6 +6,7 @@ import cn.ecnu.model.vo.EnvironmentMonitorVO;
 import cn.ecnu.model.vo.PageResult;
 import cn.ecnu.model.vo.Result;
 import cn.ecnu.service.EnvironmentMonitorService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ import static cn.ecnu.constant.OptTypeConstant.DELETE;
 
 @RestController
 @RequestMapping("/environment/monitor")
+@Api(tags = "大棚监测模块")
 public class EnvironmentMonitorController {
     @Autowired
     private EnvironmentMonitorService environmentMonitorService;

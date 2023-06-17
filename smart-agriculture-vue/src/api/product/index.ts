@@ -1,7 +1,7 @@
 import { PageResult, Result } from "@/model";
 import request from "@/utils/request";
 import { AxiosPromise } from "axios";
-import { Product, ProductForm, ProductQuery } from "./types";
+import {PlantForm, Product, ProductForm, ProductQuery} from "./types";
 
 /**
  * 查看农作物列表
@@ -62,3 +62,14 @@ export function getProductAll(): AxiosPromise<Result<Product[]>> {
   });
 }
 
+/**
+ * 种植农作物
+ * @param data
+ */
+export function plant(data: PlantForm): AxiosPromise<Result<null>> {
+  return request({
+    url: "/plant/plant",
+    method: "post",
+    data,
+  });
+}
