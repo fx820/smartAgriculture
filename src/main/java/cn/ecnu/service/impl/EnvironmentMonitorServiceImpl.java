@@ -12,6 +12,7 @@ import cn.ecnu.service.EnvironmentMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ import java.util.List;
 @Service("environmentMonitorService")
 public class EnvironmentMonitorServiceImpl extends ServiceImpl<EnvironmentMonitorMapper, EnvironmentMonitor> implements EnvironmentMonitorService {
 
- @Autowired
+ @Resource
  private EnvironmentMonitorMapper environmentMonitorMapper;
 
  @Override
@@ -40,6 +41,11 @@ public class EnvironmentMonitorServiceImpl extends ServiceImpl<EnvironmentMonito
  @Override
  public void deleteEnvironmentMonitor(List<Integer> environmentMonitorIdList) {
    environmentMonitorMapper.deleteBatchIds(environmentMonitorIdList);
+ }
+
+ @Override
+ public int addEnvironmentMonitor(EnvironmentMonitor environmentMonitor) {
+  return environmentMonitorMapper.insert(environmentMonitor);
  }
 }
 

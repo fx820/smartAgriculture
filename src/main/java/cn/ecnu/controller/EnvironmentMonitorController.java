@@ -1,6 +1,7 @@
 package cn.ecnu.controller;
 
 import cn.ecnu.annotation.OptLogger;
+import cn.ecnu.entity.EnvironmentMonitor;
 import cn.ecnu.model.dto.ConditionDTO;
 import cn.ecnu.model.vo.EnvironmentMonitorVO;
 import cn.ecnu.model.vo.PageResult;
@@ -35,7 +36,11 @@ public class EnvironmentMonitorController {
         return Result.success(environmentMonitorService.listEnvironmentMonitorVO(condition));
     }
 
-
+    @ApiOperation(value = "插入大棚信息监测")
+    @PostMapping("/add")
+    public Result<Integer> addEnvironmentMonitorVO(@RequestBody EnvironmentMonitor environmentMonitor){
+        return Result.success(environmentMonitorService.addEnvironmentMonitor(environmentMonitor));
+    }
 
 
 

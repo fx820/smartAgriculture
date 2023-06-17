@@ -19,4 +19,6 @@ public interface EnvironmentMonitorService extends IService<EnvironmentMonitor> 
      PageResult<EnvironmentMonitorVO> listEnvironmentMonitorVO(ConditionDTO condition);
 
      void deleteEnvironmentMonitor(List<Integer> environmentMonitorIdList);
+
+     int addEnvironmentMonitor(EnvironmentMonitor environmentMonitorList);
  }
