@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.ecnu.model.dto.EmailDTO;
 import cn.ecnu.model.dto.UserDTO;
 import cn.ecnu.model.dto.UserInfoDTO;
+import cn.ecnu.model.vo.BackInfoVO;
 import cn.ecnu.model.vo.Result;
 import cn.ecnu.model.vo.UserInfoVO;
 import cn.ecnu.service.UserService;
