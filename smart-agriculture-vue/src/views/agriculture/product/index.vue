@@ -44,7 +44,7 @@
         </template>
       </el-table-column>
       <el-table-column label="农作物图片" align="center" #default="scope" width="180">
-          <el-image :src="scope.row.photo"/>
+          <el-image :src="scope.row.photo" style="width: 120px;height: 120px"/>
       </el-table-column>
       <!-- 创建时间 -->
       <el-table-column prop="createTime" width="270" label="创建时间" align="center">

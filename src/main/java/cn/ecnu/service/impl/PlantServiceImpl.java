@@ -1,5 +1,7 @@
 package cn.ecnu.service.impl;
 
+import cn.ecnu.entity.Product;
+import cn.ecnu.mapper.ProductMapper;
 import cn.ecnu.model.dto.ConditionDTO;
 import cn.ecnu.model.dto.PlantDTO;
 import cn.ecnu.model.vo.PageResult;
@@ -28,10 +30,18 @@ public class PlantServiceImpl extends ServiceImpl<PlantMapper, Plant> implements
  @Autowired
  private PlantMapper plantMapper;
 
+ @Autowired
+ private ProductMapper productMapper;
+
   @Override
   public void plant(PlantDTO plantDTO) {
    Plant plant = BeanCopyUtils.copyBean(plantDTO, Plant.class);
    baseMapper.insert(plant);
+   //更改种植状态
+   Product product = new Product();
+   product.setId(plantDTO.getProductId());
+   product.setStatus(1);
+   productMapper.updateById(product);
   }
 
   @Override

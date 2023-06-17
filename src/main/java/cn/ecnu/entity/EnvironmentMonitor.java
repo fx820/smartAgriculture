@@ -27,17 +27,15 @@ public class EnvironmentMonitor {
         //空气温度
         private Double airTemperature;
         //空气湿度
-        private Double airHumidity;
+        private Integer airHumidity;
         //土壤温度
         private Double soilTemperature;
         //土壤湿度
-        private Double soilHumidity;
+        private Integer soilHumidity;
         //二氧化碳含量
-        private Double c02Level;
+        private Integer c02Level;
         //光照度
-        private Double lightLevel;
-        //传感器编号(可能对应多个）
-        private String sensorIds;
+        private Integer lightLevel;
         //大棚编号
         private Integer greenHouseId;
         //创建时间

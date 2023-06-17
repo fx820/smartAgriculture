@@ -15,7 +15,7 @@
     </select>
 
     <select id="selectEnvironmentMonitorVO" resultType="cn.ecnu.model.vo.EnvironmentMonitorVO">
-        select em.*,gh.NAME as name,em.sensor_ids as sensorIds from t_environment_monitor em inner join t_green_houses gh on em.GREEN_HOUSE_ID = gh.ID
+        select em.*,gh.NAME as name from t_environment_monitor em inner join t_green_houses gh on em.GREEN_HOUSE_ID = gh.ID
         <where>
             <if test="condition.keyword != null">
                 AND gh.name like concat('%', #{condition.keyword}, '%')

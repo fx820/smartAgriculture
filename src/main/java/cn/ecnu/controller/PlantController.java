@@ -1,6 +1,5 @@
 package cn.ecnu.controller;
 
-import cn.ecnu.annotation.OptLogger;
 import cn.ecnu.entity.Plant;
 import cn.ecnu.model.dto.ConditionDTO;
 import cn.ecnu.model.dto.PlantDTO;
