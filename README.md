@@ -6,9 +6,9 @@
 
 **前端：**Vue3 + Vue Router + TypeScript + Axios + Element Plus + Echarts
 
-后端：SpringBoot + MySQL + Redis + Quartz + Sa-Token + MybatisPlus + RabbitMQ
+**后端：**SpringBoot + MySQL + Redis + Quartz + Sa-Token + MybatisPlus + RabbitMQ
 
-模型训练： EasyDL
+**模型训练：** EasyDL
 
 ## 环境介绍
 
